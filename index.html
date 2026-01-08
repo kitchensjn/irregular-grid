@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Irregular Grid</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+
+        <style>
+
+            
+
+        </style>
+
+    </head>
+    <body>
+
+        <div id="container"></div>
+
+        <script>
+
+            var graph = {
+                "nodes": [
+                    {"id":0, "fx":500, "fy":100},
+                    {"id":1, "fx":400, "fy":150},
+                    {"id":2, "fx":600, "fy":150},
+                    {"id":3, "fx":300, "fy":200},
+                    {"id":4, "x":500, "y":200},
+                    {"id":5, "fx":700, "fy":200},
+                    {"id":6, "fx":200, "fy":250},
+                    {"id":7, "x":400, "y":250},
+                    {"id":8, "x":600, "y":250},
+                    {"id":9, "fx":800, "fy":250},
+                    {"id":10, "fx":100, "fy":300},
+                    {"id":11, "x":300, "y":300},
+                    {"id":12, "x":500, "y":300},
+                    {"id":13, "x":700, "y":300},
+                    {"id":14, "fx":900, "fy":300},
+                    {"id":15, "fx":200, "fy":350},
+                    {"id":16, "x":400, "y":350},
+                    {"id":17, "x":600, "y":350},
+                    {"id":18, "fx":800, "fy":350},
+                    {"id":19, "fx":100, "fy":400},
+                    {"id":20, "x":300, "y":400},
+                    {"id":21, "x":500, "y":400},
+                    {"id":22, "x":700, "y":400},
+                    {"id":23, "fx":900, "fy":400},
+                    {"id":24, "fx":200, "fy":450},
+                    {"id":25, "x":400, "y":450},
+                    {"id":26, "x":600, "y":450},
+                    {"id":27, "fx":800, "fy":450},
+                    {"id":28, "fx":100, "fy":500},
+                    {"id":29, "x":300, "y":500},
+                    {"id":30, "x":500, "y":500},
+                    {"id":31, "x":700, "y":500},
+                    {"id":32, "fx":900, "fy":500},
+                    {"id":33, "fx":200, "fy":550},
+                    {"id":34, "x":400, "y":550},
+                    {"id":35, "x":600, "y":550},
+                    {"id":36, "fx":800, "fy":550},
+                    {"id":37, "fx":100, "fy":600},
+                    {"id":38, "x":300, "y":600},
+                    {"id":39, "x":500, "y":600},
+                    {"id":40, "x":700, "y":600},
+                    {"id":41, "fx":900, "fy":600},
+                    {"id":42, "fx":200, "fy":650},
+                    {"id":43, "x":400, "y":650},
+                    {"id":44, "x":600, "y":650},
+                    {"id":45, "fx":800, "fy":650},
+                    {"id":46, "fx":100, "fy":700},
+                    {"id":47, "x":300, "y":700},
+                    {"id":48, "x":500, "y":700},
+                    {"id":49, "x":700, "y":700},
+                    {"id":50, "fx":900, "fy":700},
+                    {"id":51, "fx":200, "fy":750},
+                    {"id":52, "x":400, "y":750},
+                    {"id":53, "x":600, "y":750},
+                    {"id":54, "fx":800, "fy":750},
+                    {"id":55, "fx":300, "fy":800},
+                    {"id":56, "x":500, "y":800},
+                    {"id":57, "fx":700, "fy":800},
+                    {"id":58, "fx":400, "fy":850},
+                    {"id":59, "fx":600, "fy":850},
+                    {"id":60, "fx":500, "fy":900},
+                ],
+                "links": [
+                    {"id": 0, "source":0, "target":1},
+                    {"id": 1, "source":0, "target":2},
+                    //{"id": 2, "source":0, "target":4},
+                    
+                    {"id": 3, "source":1, "target":3},
+                    {"id": 4, "source":1, "target":4},
+                    //{"id": 5, "source":1, "target":7},
+                    {"id": 6, "source":2, "target":4},
+                    {"id": 7, "source":2, "target":5},
+                    {"id": 8, "source":2, "target":8},
+
+                    {"id": 9, "source":3, "target":6},
+                    {"id": 10, "source":3, "target":7},
+                    //{"id": 11, "source":3, "target":11},
+                    {"id": 12, "source":4, "target":7},
+                    {"id": 13, "source":4, "target":8},
+                    //{"id": 14, "source":4, "target":12},
+                    //{"id": 15, "source":5, "target":8},
+                    {"id": 16, "source":5, "target":9},
+                    {"id": 17, "source":5, "target":13},
+                    {"id": 18, "source":6, "target":10},
+                    {"id": 19, "source":6, "target":11},
+                    //{"id": 20, "source":6, "target":15},
+                    {"id": 21, "source":7, "target":11},
+                    {"id": 22, "source":7, "target":12},
+                    {"id": 23, "source":7, "target":16},
+                    {"id": 24, "source":8, "target":12},
+                    {"id": 25, "source":8, "target":13},
+                    //{"id": 26, "source":8, "target":17},
+                    //{"id": 27, "source":9, "target":13},
+                    {"id": 28, "source":9, "target":14},
+                    {"id": 29, "source":9, "target":18},
+                    
+                    {"id": 30, "source":10, "target":15},
+                    {"id": 31, "source":10, "target":19},
+                    {"id": 32, "source":11, "target":15},
+                    {"id": 33, "source":11, "target":16},
+                    //{"id": 34, "source":11, "target":20},
+                    //{"id": 35, "source":12, "target":16},
+                    {"id": 36, "source":12, "target":17},
+                    {"id": 37, "source":12, "target":21},
+                    {"id": 38, "source":13, "target":17},
+                    {"id": 39, "source":13, "target":18},
+                    //{"id": 40, "source":13, "target":22},
+                    //{"id": 41, "source":14, "target":18},
+                    {"id": 42, "source":14, "target":23},
+                    //{"id": 43, "source":15, "target":19},
+                    {"id": 44, "source":15, "target":20},
+                    {"id": 45, "source":15, "target":24},
+                    {"id": 46, "source":16, "target":20},
+                    {"id": 47, "source":16, "target":21},
+                    //{"id": 48, "source":16, "target":25},
+                    //{"id": 49, "source":17, "target":21},
+                    {"id": 50, "source":17, "target":22},
+                    {"id": 51, "source":17, "target":26},
+                    {"id": 52, "source":18, "target":22},
+                    {"id": 53, "source":18, "target":23},
+                    //{"id": 54, "source":18, "target":27},
+                    
+                    {"id": 55, "source":10+9, "target":15+9},
+                    {"id": 56, "source":10+9, "target":19+9},
+                    //{"id": 57, "source":11+9, "target":15+9},
+                    {"id": 58, "source":11+9, "target":16+9},
+                    {"id": 59, "source":11+9, "target":20+9},
+                    {"id": 60, "source":12+9, "target":16+9},
+                    {"id": 61, "source":12+9, "target":17+9},
+                    //{"id": 62, "source":12+9, "target":21+9},
+                    //{"id": 63, "source":13+9, "target":17+9},
+                    {"id": 64, "source":13+9, "target":18+9},
+                    {"id": 65, "source":13+9, "target":22+9},
+                    {"id": 66, "source":14+9, "target":18+9},
+                    {"id": 67, "source":14+9, "target":23+9},
+                    //{"id": 68, "source":15+9, "target":19+9},
+                    {"id": 69, "source":15+9, "target":20+9},
+                    {"id": 70, "source":15+9, "target":24+9},
+                    //{"id": 71, "source":16+9, "target":20+9},
+                    {"id": 72, "source":16+9, "target":21+9},
+                    {"id": 73, "source":16+9, "target":25+9},
+                    {"id": 74, "source":17+9, "target":21+9},
+                    {"id": 75, "source":17+9, "target":22+9},
+                    //{"id": 76, "source":17+9, "target":26+9},
+                    //{"id": 77, "source":18+9, "target":22+9},
+                    //{"id": 78, "source":18+9, "target":23+9},
+                    {"id": 79, "source":18+9, "target":27+9},
+
+                    {"id": 80, "source":10+18, "target":15+18},
+                    {"id": 81, "source":10+18, "target":19+18},
+                    //{"id": 82, "source":11+18, "target":15+18},
+                    {"id": 83, "source":11+18, "target":16+18},
+                    {"id": 84, "source":11+18, "target":20+18},
+                    {"id": 85, "source":12+18, "target":16+18},
+                    {"id": 86, "source":12+18, "target":17+18},
+                    //{"id": 87, "source":12+18, "target":21+18},
+                    {"id": 88, "source":13+18, "target":17+18},
+                    {"id": 89, "source":13+18, "target":18+18},
+                    //{"id": 90, "source":13+18, "target":22+18},
+                    {"id": 91, "source":14+18, "target":18+18},
+                    {"id": 92, "source":14+18, "target":23+18},
+                    //{"id": 93, "source":15+18, "target":19+18},
+                    {"id": 94, "source":15+18, "target":20+18},
+                    {"id": 95, "source":15+18, "target":24+18},
+                    //{"id": 96, "source":16+18, "target":20+18},
+                    {"id": 97, "source":16+18, "target":21+18},
+                    {"id": 98, "source":16+18, "target":25+18},
+                    {"id": 99, "source":17+18, "target":21+18},
+                    {"id": 100, "source":17+18, "target":22+18},
+                    //{"id": 101, "source":17+18, "target":26+18},
+                    {"id": 102, "source":18+18, "target":22+18},
+                    {"id": 103, "source":18+18, "target":23+18},
+                    //{"id": 104, "source":18+18, "target":27+18},
+
+                    {"id": 105, "source":10+27, "target":15+27},
+                    {"id": 106, "source":10+27, "target":19+27},
+                    //{"id": 107, "source":11+27, "target":15+27},
+                    {"id": 108, "source":11+27, "target":16+27},
+                    {"id": 109, "source":11+27, "target":20+27},
+                    //{"id": 110, "source":12+27, "target":16+27},
+                    {"id": 111, "source":12+27, "target":17+27},
+                    {"id": 112, "source":12+27, "target":21+27},
+                    {"id": 113, "source":13+27, "target":17+27},
+                    {"id": 114, "source":13+27, "target":18+27},
+                    //{"id": 115, "source":13+27, "target":22+27},
+                    {"id": 116, "source":14+27, "target":18+27},
+                    {"id": 117, "source":14+27, "target":23+27},
+                    //{"id": 118, "source":15+27, "target":19+27},
+                    {"id": 119, "source":15+27, "target":20+27},
+                    {"id": 120, "source":15+27, "target":24+27},
+                    {"id": 121, "source":16+27, "target":20+27},
+                    {"id": 122, "source":16+27, "target":21+27},
+                    //{"id": 123, "source":16+27, "target":25+27},
+                    //{"id": 124, "source":17+27, "target":21+27},
+                    {"id": 125, "source":17+27, "target":22+27},
+                    {"id": 126, "source":17+27, "target":26+27},
+                    {"id": 127, "source":18+27, "target":22+27},
+                    //{"id": 128, "source":18+27, "target":23+27},
+                    {"id": 129, "source":18+27, "target":27+27},
+
+                    {"id": 130, "source":46, "target":51},
+                    //{"id": 131, "source":47, "target":51},
+                    {"id": 132, "source":47, "target":52},
+                    {"id": 133, "source":47, "target":55},
+                    {"id": 134, "source":48, "target":52},
+                    {"id": 135, "source":48, "target":53},
+                    //{"id": 136, "source":48, "target":56},
+                    //{"id": 137, "source":49, "target":53},
+                    //{"id": 138, "source":49, "target":54},
+                    {"id": 139, "source":49, "target":57},
+                    {"id": 140, "source":50, "target":54},
+
+                    {"id": 141, "source":51, "target":55},
+                    //{"id": 142, "source":52, "target":55},
+                    {"id": 143, "source":52, "target":56},
+                    {"id": 144, "source":52, "target":58},
+                    {"id": 145, "source":53, "target":56},
+                    {"id": 146, "source":53, "target":57},
+                    //{"id": 147, "source":53, "target":59},
+                    {"id": 148, "source":54, "target":57},
+
+                    {"id": 149, "source":55, "target":58},
+                    {"id": 150, "source":56, "target":58},
+                    {"id": 151, "source":56, "target":59},
+                    //{"id": 152, "source":56, "target":60},
+                    {"id": 153, "source":57, "target":59},
+
+                    {"id": 154, "source":58, "target":60},
+                    {"id": 155, "source":59, "target":60},
+                ]
+            }
+
+            var svg = d3.select("#container").append("svg")
+                .attr("width", 1500)
+                .attr("height", 1000);
+
+            var simulation = d3
+                .forceSimulation(graph.nodes)
+                .force("link", d3.forceLink()
+                    .links(graph.links)
+                )
+                .on("tick", ticked);
+
+            var link = svg
+                .append("g")
+                .attr("class", "links")
+                .selectAll("circle")
+                .data(graph.links)
+                .enter()
+                .append("line")
+                    .attr("x1", d=>d.source.x)
+                    .attr("y1", d=>d.source.y)
+                    .attr("x2", d=>d.target.x)
+                    .attr("y2", d=>d.target.y)
+                    .style("stroke-width", 3)
+                    .style("stroke", "grey");
+
+            var node = svg
+                .append("g")
+                .attr("class", "nodes")
+                .selectAll("circle")
+                .data(graph.nodes)
+                .enter()
+                .append("circle")
+                    .attr("cx", d=>d.x)
+                    .attr("cy", d=>d.y)
+                    .attr("r", 10);
+
+
+            function ticked() {
+                
+                node
+                    .attr("cx", d=>d.x)
+                    .attr("cy", d=>d.y);
+                
+                link
+                    .attr("x1", d=>d.source.x)
+                    .attr("y1", d=>d.source.y)
+                    .attr("x2", d=>d.target.x)
+                    .attr("y2", d=>d.target.y);
+                
+            }
+
+        </script>
+    </body>
+</html>
