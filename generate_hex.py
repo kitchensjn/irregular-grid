@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import networkx as nx
 
 
 def populate_vertices(num_rings, gap_between_rings=1):
@@ -72,7 +73,7 @@ def get_starting_vertex_of_ring(ring):
     
 
 
-num_rings = 10
+num_rings = 20
 
 vertices = populate_vertices(num_rings, gap_between_rings=1)
 
@@ -139,18 +140,40 @@ for edge in removal_order:
     edges = remove_edge(edges.loc[edge], edges, faces)
 
 
+G = nx.Graph()
+
+for _,edge in edges.iterrows():
+    if edge["removed"] == False:
+        G.add_edge(edge["vertex0"], edge["vertex1"])
+
+starting_pos = {}
+for vertex in G.nodes:
+    v = vertices.loc[vertex, ["x", "y"]]
+    starting_pos[vertex] = [v["x"], v["y"]]
+
+pos = nx.spring_layout(G, k=0.05, pos=starting_pos, fixed=G.nodes)
+nx.draw_networkx_edges(G, pos=pos)
+plt.axis("equal")
+plt.axis("off")
+plt.show()
+
+pos = nx.spring_layout(G, k=0.05, pos=starting_pos, fixed=range(starting_vertex, starting_vertex+get_num_vertices_in_ring(num_rings)), iterations=300)
+nx.draw_networkx_edges(G, pos=pos)
+plt.axis("equal")
+plt.axis("off")
+plt.show()
 
 
 
         
 
 
-for _,edge in edges.iterrows():
-    vertex0 = vertices.loc[vertices["i"]==edge["vertex0"],].iloc[0]
-    vertex1 = vertices.loc[vertices["i"]==edge["vertex1"],].iloc[0]
-    plt.plot([vertex0["x"], vertex1["x"]], [vertex0["y"], vertex1["y"]], color=edge["locked"])
+#for _,edge in edges.iterrows():
+#    vertex0 = vertices.loc[vertices["i"]==edge["vertex0"],].iloc[0]
+#    vertex1 = vertices.loc[vertices["i"]==edge["vertex1"],].iloc[0]
+#    plt.plot([vertex0["x"], vertex1["x"]], [vertex0["y"], vertex1["y"]], color=edge["locked"])
 
-plt.scatter(vertices["x"], vertices["y"], color="black", zorder=100)
-plt.axis("equal")
-plt.axis("off")
-plt.show()
+#plt.scatter(vertices["x"], vertices["y"], color="black", zorder=100)
+#plt.axis("equal")
+#plt.axis("off")
+#plt.show()
